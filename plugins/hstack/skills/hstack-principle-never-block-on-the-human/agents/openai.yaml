@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-principle-never-block-on-the-human
+  short_description: Within an explicitly selected hstack workflow. Apply when tempte
+policy:
+  allow_implicit_invocation: false

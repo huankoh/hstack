@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-unslop
+  short_description: Within an explicitly selected hstack workflow. Cut AI tells from
+policy:
+  allow_implicit_invocation: false

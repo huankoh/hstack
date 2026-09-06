@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-principle-laziness-protocol
+  short_description: Within an explicitly selected hstack workflow. Apply when refact
+policy:
+  allow_implicit_invocation: false

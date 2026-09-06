@@ -24,14 +24,14 @@ three failures, fixed the application and committed
 `294d0108e6656dd47ff13c560ce1fc4d219691d6` from baseline
 `725731a6f6a56b2549d90dd180f9635741c68b87`. Model preferences stayed inherited.
 
-The first actual Codex review, job `private-worker-02`, reported
+The first actual Codex review, job `private-worker-01`, reported
 blocked because its read-only sandbox could not create temporary CSV files.
 The runner's acceptance suite passed, but the blocked report correctly prevented
 acceptance. Commit `0c7719435557009a0e84e787075ad79ded08ae1c` clarified the
 division: reviewers perform read-only checks; the runner executes supplied checks
 that require temporary files. The sandbox and acceptance tests were preserved.
 
-Cursor retried as job `private-worker-03`. The reviewer executed
+Cursor retried as job `private-worker-02`. The reviewer executed
 eight real CLI probes, returned `pass` with no findings, and left an empty patch.
 The runner and an independent host check each passed all four acceptance tests.
 Source snapshots matched before and after, the checkout remained clean, and
@@ -52,7 +52,7 @@ The fresh h3 task recorded the catalog before searching files. Only hstack's
 native cache. Thus registered plugin/cache activation is verified, while this
 run does not establish a native catalog path for every workflow.
 
-The cached runner launched Codex job `private-worker-04` using
+The cached runner launched Codex job `private-worker-03` using
 package source `e35ef95c149bd2a45776779a11da7e0f68366a2c`. Seven read-only
 scenarios plus the sample CLI passed, the review returned `pass` with no findings,
 and the runner and independent host each passed all four tests. The original
@@ -99,14 +99,14 @@ task and must be checked at runtime.
 
 ## Linux and host validation
 
-The `hstack` GitHub Actions job runs package/runner tests, upstream tests/typecheck, and a clean Ubuntu CLI installation/version check twice without credentials. The [first clean Ubuntu run](https://example.invalid/private-ci-run-01), under the previous `pstack hybrid` job name, passed every step, including both CLI installation invocations. Subsequent PR checks validate later changes.
+The `hstack` GitHub Actions job runs package/runner tests, upstream tests/typecheck, and a clean Ubuntu CLI installation/version check twice without credentials. The [first clean Ubuntu run](https://example.invalid/private-ci-run-02), under the previous `pstack hybrid` job name, passed every step, including both CLI installation invocations. Subsequent PR checks validate later changes.
 
 An initial Cursor cloud VM installed Codex CLI, staged hstack and passed all four
 receipt-fixture tests. The reusable **hstack activation** environment
 `private-environment-01` initially completed Build
-`private-build-02`.
+`private-build-03`.
 
-A [fresh cloud task](https://example.invalid/private-cursor-task-01)
+A [fresh cloud task](https://example.invalid/private-cursor-task-02)
 selected that environment and cold-booted from the saved Build. It verified staged
 source `e35ef95c149bd2a45776779a11da7e0f68366a2c`, fingerprint
 `8caa1fe2cf724fc196bc79c104fb83a1b773d7e9f8ec11f0dac37bf055074964`, and Codex CLI
@@ -119,21 +119,21 @@ Saved-Build reuse, package staging and binary readiness were verified before
 authentication. The user then authorized device login in that VM. The doctor
 reported `auth: chatgpt` and `ready: true`, and a real nested review passed.
 Handoff `private-handoff-01`, worker
-`private-worker-01`, reviewed fixture commit
+`private-worker-04`, reviewed fixture commit
 `c4fa19a3b5dd7ea88f31d391b6fb9a9ce1656ead`. Codex returned `pass` with no
 findings, the parent ran all four acceptance tests successfully, source snapshots
 matched, and current-HEAD validation passed. No credential-bearing Build was made.
 Native hstack cloud discovery remains unresolved.
 
 Commit `1447b237746e9ea58525a3b3209b5e8a4c5f20b1` adds runtime-secret bootstrap
-and isolated auth-home selection. Its [CI run](https://example.invalid/private-ci-run-02)
+and isolated auth-home selection. Its [CI run](https://example.invalid/private-ci-run-03)
 passed. Cold restore and repeat preservation also passed with a test CLI; these
 checks do not themselves establish server authentication. The documented static
 seed does not provide credential write-back or exclusive ownership across VMs.
 
-A [fresh unattended-authentication task](https://example.invalid/private-cursor-task-02)
+A [fresh unattended-authentication task](https://example.invalid/private-cursor-task-03)
 then booted from the environment's new active Build
-`private-build-01`, with source
+`private-build-02`, with source
 `1447b237746e9ea58525a3b3209b5e8a4c5f20b1` and fingerprint
 `aa26de2dc500267b3cee8f047f5cee045f634f0268eb0b4e342ac99186e0c0f0`.
 The runtime Start restored `HSTACK_CODEX_AUTH_JSON`, saved as an Environment

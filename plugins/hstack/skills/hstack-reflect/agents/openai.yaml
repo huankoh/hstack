@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-reflect
+  short_description: Within an explicitly selected hstack workflow. Spawn three paral
+policy:
+  allow_implicit_invocation: false

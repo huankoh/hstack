@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-principle-build-the-lever
+  short_description: Within an explicitly selected hstack workflow. Apply to any non-
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-figure-it-out
+  short_description: Within an explicitly selected hstack workflow. Design an auditab
+policy:
+  allow_implicit_invocation: false

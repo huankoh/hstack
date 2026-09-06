@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-principle-outcome-oriented-execution
+  short_description: Within an explicitly selected hstack workflow. Apply during plan
+policy:
+  allow_implicit_invocation: false

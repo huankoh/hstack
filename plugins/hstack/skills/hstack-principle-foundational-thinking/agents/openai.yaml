@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-principle-foundational-thinking
+  short_description: Within an explicitly selected hstack workflow. Apply before writ
+policy:
+  allow_implicit_invocation: false

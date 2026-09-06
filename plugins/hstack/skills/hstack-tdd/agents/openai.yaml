@@ -1,0 +1,6 @@
+interface:
+  display_name: hstack-tdd
+  short_description: Within an explicitly selected hstack workflow. Use only when
+    the
+policy:
+  allow_implicit_invocation: false

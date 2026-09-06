@@ -1,0 +1,6 @@
+interface:
+  display_name: hstack-architect
+  short_description: Within an explicitly selected hstack workflow. Sketch types,
+    sig
+policy:
+  allow_implicit_invocation: false

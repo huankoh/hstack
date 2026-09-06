@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-make-bot-ui
+  short_description: Within an explicitly selected hstack workflow. Use when building
+policy:
+  allow_implicit_invocation: false

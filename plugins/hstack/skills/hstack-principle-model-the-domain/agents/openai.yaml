@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-principle-model-the-domain
+  short_description: Within an explicitly selected hstack workflow. Apply when writin
+policy:
+  allow_implicit_invocation: false

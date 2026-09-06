@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-technical-writing
+  short_description: Within an explicitly selected hstack workflow. Layered technical
+policy:
+  allow_implicit_invocation: false

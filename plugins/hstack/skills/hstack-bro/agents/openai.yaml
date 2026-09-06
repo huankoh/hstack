@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-bro
+  short_description: 'Within an explicitly selected hstack workflow. Restate the last '
+policy:
+  allow_implicit_invocation: false

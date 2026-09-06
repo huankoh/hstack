@@ -1,0 +1,6 @@
+interface:
+  display_name: hstack-poteto-mode
+  short_description: Run hstack engineering workflows when the user requests hstack
+    o
+policy:
+  allow_implicit_invocation: true

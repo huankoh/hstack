@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-recall
+  short_description: 'Within an explicitly selected hstack workflow. Reconstruct your '
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-principle-subtract-before-you-add
+  short_description: Within an explicitly selected hstack workflow. Apply when sequen
+policy:
+  allow_implicit_invocation: false

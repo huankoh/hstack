@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-why
+  short_description: Within an explicitly selected hstack workflow. Use for 'why does
+policy:
+  allow_implicit_invocation: false
