@@ -1,6 +1,6 @@
 {
   "name": "hstack",
-  "version": "0.14.8+hstack.dc2ec751f51e",
+  "version": "0.14.8+hstack.7947aa059b0c",
   "description": "hstack: pstack workflows for Codex CLI and desktop, with optional hybrid execution.",
   "author": {
     "name": "Lauren Tan"

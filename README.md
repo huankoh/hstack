@@ -6,12 +6,20 @@ This repository publishes the generated packages. The [maintained source](https:
 
 ## Install
 
-**Cursor plugin:** Open Customize → Add Marketplace → Import from GitHub, enter `https://github.com/huankoh/hstack`, then choose **hstack**. This repository puts the hstack marketplace on its default branch. Native import and discovery of the current generated version require verification in the actual client. Exported skill directories provide a separate installation route; the cloud startup export remains experimental.
+The namespaced release remains on `feat/namespaced-hstack-skills` for review; `main` still contains the earlier package. The live discovery checks used distribution commit `66b1ac1ac6ae2c190a9ff20a9f1db28f367c4977` and runtime source `bbe9d3e5d3f3531227e4c5d88da99a6394540bb1`.
+
+**Cursor plugin:** Register the tested remote marketplace with Cursor Agent CLI:
+
+```bash
+agent plugin marketplace add https://github.com/huankoh/hstack.git --git-ref 66b1ac1ac6ae2c190a9ff20a9f1db28f367c4977
+```
+
+Then open native Cursor's **Customize → Add**, choose **hstack**, and install it. Registration alone does not install the plugin. If an older marketplace named hstack is registered, follow the [replacement procedure](cursor/plugins/hstack/hybrid/docs/cursor-local.md#install-the-pinned-remote-marketplace); preserve the original pstack marketplace.
 
 **Codex CLI or desktop:** Clone this repository, then register its marketplace from the clone root:
 
 ```bash
-git clone https://github.com/huankoh/hstack.git
+git clone --branch feat/namespaced-hstack-skills https://github.com/huankoh/hstack.git
 cd hstack
 codex plugin marketplace add "$PWD"
 codex plugin add hstack@hstack
@@ -25,7 +33,7 @@ python3 -m venv .venv
 .venv/bin/python cursor/plugins/hstack/hybrid/install-cursor-skills.py cursor/plugins/hstack
 ```
 
-This manages only the generated `hstack-` directories under `~/.cursor/skills` and preserves original pstack and unrelated personal skills. It refuses unrecognized existing directories or local edits. For cloud agents, **Sync Skills for Cloud Agents** is another route when available; personal sync applies to the entire personal skills directory. The documented startup export is experimental. The first fresh probe at source `8b2ed0c` exposed hstack setup but omitted its poteto entrypoint. This source removes the entrypoint's inherited Cursor mode restrictions; a fresh cloud test of that fix is pending. See [automatic discovery](cursor/plugins/hstack/hybrid/docs/invocation.md) and [cloud setup](cursor/plugins/hstack/hybrid/docs/cursor-cloud.md) before configuring that host.
+This manages only the generated `hstack-` directories under `~/.cursor/skills` and preserves original pstack and unrelated personal skills. It refuses unrecognized existing directories or local edits. Fresh Cursor cloud discovery passed with the pinned marketplace installed and **Sync Skills for Cloud Agents** enabled after personal export. The selected path was the native plugin cache. Both settings changed together, so the result does not isolate sync as the cause. Sync applies to the entire personal skills directory. Earlier startup exports did not establish discovery; use the [tested combined setup](cursor/plugins/hstack/hybrid/docs/cursor-cloud.md) and [invocation guide](cursor/plugins/hstack/hybrid/docs/invocation.md).
 
 ## Choose hstack explicitly
 
@@ -34,11 +42,11 @@ Open a new task after installation and use the full portable name:
 | Host | hstack | Original pstack |
 |---|---|---|
 | Cursor | `/hstack-poteto-mode` | `/poteto-mode` |
-| Codex native plugin picker | `$hstack:hstack-poteto-mode` | Select the original pstack plugin entry |
-| Codex portable skill installation | `$hstack-poteto-mode` | `$poteto-mode` |
+| Codex qualified catalog, local or tested cloud | `$hstack:hstack-poteto-mode` | `$pstack:poteto-mode` |
+| Codex unqualified catalog | `$hstack-poteto-mode` | `$poteto-mode` |
 | Grok Bot | Ask the hstack-configured bot to use `hstack-poteto-mode` | Use the original bot and its pstack workflow |
 
-All 45 generated skills have the prefix, including `hstack-how` and `hstack-setup-pstack`. Codex's native plugin picker adds the plugin namespace, producing `$hstack:hstack-poteto-mode`; portable skill installation uses `$hstack-poteto-mode`. `hstack:poteto-mode` omits the renamed skill identifier. Setup uses `/hstack-setup-pstack` in Cursor, `$hstack:hstack-setup-pstack` in Codex's native plugin picker, or `$hstack-setup-pstack` for portable Codex skills. You do not need to change models to start.
+All 45 generated skills have the prefix, including `hstack-how` and `hstack-setup-pstack`. Codex can add the package namespace even when skills are staged through `.agents/skills`; use the qualified or unqualified entry shown by the actual catalog. `hstack:poteto-mode` omits the renamed skill identifier. Setup uses `/hstack-setup-pstack` in Cursor and the matching `$hstack:hstack-setup-pstack` or `$hstack-setup-pstack` entry in Codex. You do not need to change models to start.
 
 After hstack is selected, its `SKILL-MAP.json` resolves sibling workflows and delegated agents to exact files in that package. Missing hstack instructions are reported instead of silently selecting upstream pstack. Portable Cursor exports keep one discoverable wrapper per skill and store supporting workflow files as `WORKFLOW.md` inside the shared payload. The map is adjusted for those paths.
 
@@ -46,18 +54,25 @@ After hstack is selected, its `SKILL-MAP.json` resolves sibling workflows and de
 
 | Host | Setup and observed limits |
 |---|---|
-| Cursor local | Earlier plugin installation and real Codex review passed on the versions in the [verification record](cursor/plugins/hstack/hybrid/docs/verification.md). Check the renamed entrypoint in a fresh task after updating. |
-| Codex CLI / desktop | Generated package validation and unique skill names can be checked locally. Direct Codex work uses its native adapter; client discovery must be verified after refresh. |
-| Codex cloud | [Cloud setup](plugins/hstack/hybrid/docs/codex-cloud.md) stages a pinned source build. Earlier discovery tests used the previous names; independent delegation availability varied by task. |
-| Cursor cloud VM | Startup skill-directory export in the [environment guide](cursor/plugins/hstack/hybrid/docs/cursor-cloud.md) is experimental. The first probe exposed hstack setup but omitted poteto. Its inherited mode restrictions are now removed; fresh cloud verification is pending. Earlier explicit-loading Codex review tests do not prove automatic activation. |
-| Grok Bot | Follow the [Grok guide](cursor/plugins/hstack/hybrid/docs/grok-bot.md). The Dr. EggBot template adaptation was configured separately; this distribution contains no personal bot profiles. Grok-side Codex authentication and an actual coding run remain unverified. |
+| Cursor local | The native catalog exposed 45 hstack skills and two agents. Normal entrypoint loading passed without an explicit file path; the probe performed no Codex job or authentication. |
+| Codex CLI / desktop | A fresh native catalog found 45 hstack skills alongside 45 original pstack skills, with distinct qualified names. This verified discovery and coexistence, not a model's completed review. |
+| Codex cloud | [Fresh namespaced discovery](plugins/hstack/hybrid/docs/codex-cloud.md#verify-discovery-before-using-the-workflow) passed at runtime source `bbe9d3e`. The entrypoint, adapter, and mapped sibling instructions resolved. Native spawn was unavailable, so that run did not perform independent delegation. |
+| Cursor cloud VM | [Fresh discovery](cursor/plugins/hstack/hybrid/docs/cursor-cloud.md#recorded-fresh-cloud-result) passed with the pinned marketplace plus personal sync. It loaded the native cache and same-package workflows. Normal authentication startup was restored separately; this discovery test did not run Codex. |
+| Grok Bot | Dr. EggBot (hstack), configured separately at runtime source `bbe9d3e`, passed 21 namespace and preservation checks. Original bots, model preferences, and paused routines were preserved. This distribution contains no private bot profiles; Grok-side Codex execution remains unverified. |
 
 The hybrid workflow is coordinated by the active agent. Installation does not start a daemon, select a cloud host, authorize external actions, or provide Codex login. A saved authentication seed was tested on one fresh Cursor VM; automatic renewal across fresh or concurrent VMs is not implemented. Keep credentials outside this repository.
 
 ## Source and updates
 
-- Source revision: `bbe9d3e5d3f3531227e4c5d88da99a6394540bb1`.
-- Source fingerprint: `dc2ec751f51e2bba5a24770ed321447aea68f1aa14e25a9d4a5b4038b9fac868`.
+The live checks above used runtime source `bbe9d3e` and distribution `66b1ac1`.
+Source `cee4295a3b8cf6f469a38685e2b52f43f2e815dd` adds six documentation updates
+recording those results; it changes no runtime code. Packaging that documentation
+refresh produces a new package fingerprint without changing the tested client or
+cloud installations. See the [verification record](cursor/plugins/hstack/hybrid/docs/verification.md)
+for the exact scope of each result.
+
+- Source revision: `cee4295a3b8cf6f469a38685e2b52f43f2e815dd`.
+- Source fingerprint: `7947aa059b0c4b91ad9c25ffb69b3a95e8e69e4e686bacde8c50441f20157626`.
 - Each package retains its original `BUILD.json`; [DISTRIBUTION.json](DISTRIBUTION.json) records packaging changes separately.
 - [UPDATE.md](UPDATE.md) explains how to build and review an update.
 - [SANITIZATIONS.md](SANITIZATIONS.md) lists documentation files whose private execution references were replaced. Example-domain links are placeholders, not public evidence links.

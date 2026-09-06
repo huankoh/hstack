@@ -1,6 +1,6 @@
 {
   "runtime": "codex",
-  "source_revision": "bbe9d3e5d3f3531227e4c5d88da99a6394540bb1",
-  "source_sha256": "dc2ec751f51e2bba5a24770ed321447aea68f1aa14e25a9d4a5b4038b9fac868",
+  "source_revision": "cee4295a3b8cf6f469a38685e2b52f43f2e815dd",
+  "source_sha256": "7947aa059b0c4b91ad9c25ffb69b3a95e8e69e4e686bacde8c50441f20157626",
   "upstream_version": "0.14.8"
 }
