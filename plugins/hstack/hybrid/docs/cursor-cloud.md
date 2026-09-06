@@ -1,136 +1,97 @@
 # Set up hstack and Codex in Cursor cloud VMs
 
-## Build the environment
+## Make hstack available in a fresh cloud task
 
-Install hstack in the cloud environment separately from your local Cursor installation. A local marketplace installation does not establish that a cloud agent has received or discovered the plugin.
+Fresh Cursor cloud discovery passed with the pinned GitHub marketplace installed and personal skill sync enabled. The agent's initial catalog contained `hstack-poteto-mode` and `hstack-setup-pstack`; invoking the entrypoint loaded its package map and Cursor runtime without a manual file path. Use `/hstack-poteto-mode` for hstack and `/poteto-mode` for original pstack.
 
-The supplied `pstack/hybrid/examples/environment.json` installs and checks Codex CLI only. It does not fetch hstack or stage its generated Cursor package. For the complete setup, create a dedicated personal environment through Cursor's cloud setup UI and give its setup agent the following brief. Replace the commit only when you have selected another tested full SHA.
+The tested setup was:
 
-```text
-Configure a personal cloud environment named hstack activation for huankoh/plugins.
-Leave the connected task repository and model settings unchanged.
+1. Install the pinned remote hstack marketplace and its plugin using the [Cursor local guide](cursor-local.md#install-the-pinned-remote-marketplace). The tested distribution commit is `66b1ac1ac6ae2c190a9ff20a9f1db28f367c4977`, built from source `bbe9d3e5d3f3531227e4c5d88da99a6394540bb1`. The namespaced distribution is still on its review branch, not `main`.
+2. Build that source revision and export its 45 self-contained wrappers to personal skills:
 
-Use https://github.com/huankoh/plugins.git at exact commit
-1447b237746e9ea58525a3b3209b5e8a4c5f20b1. Fetch it into ~/hstack-bootstrap,
-outside the task repository, and verify HEAD before building. Preserve any
-existing unrelated checkout instead of replacing it.
+   ```bash
+   .venv/bin/python pstack/hybrid/install-cursor-skills.py dist/hstack/cursor/plugins/hstack
+   ```
 
-Provide Git, Python 3.9+ with venv/pip, Node.js 20+, and npm. Create a Python
-virtual environment outside the task repository. Install the pinned requirements
-from ~/hstack-bootstrap/pstack/hybrid/requirements.txt, then run that checkout's
-pstack/hybrid/build.py with the virtual environment's Python.
+3. Enable **Settings → Agents → Context and Tools → Sync Skills for Cloud Agents** and wait for **Skills synced**. In the recorded setup, Cursor showed 47 personal skills: the 45 hstack exports and two existing styles, which were preserved.
+4. Start a fresh cloud task and verify the hstack entry in its initial catalog before providing any explicit package path. Then invoke `/hstack-poteto-mode` normally.
 
-Stage the complete generated dist/hstack/cursor/plugins/hstack directory at
-~/.cursor/plugins/local/hstack. Preserve all skills, runtime adapters, assets,
-configuration, manifests, and BUILD.json. If a different installation already
-occupies that path, report the conflict instead of overwriting it.
+The successful task selected a **native plugin cache**, not a personal wrapper path. The same Build had previously failed discovery before sync was enabled. These observations establish the combined setup; they do not prove that personal sync alone caused native plugin discovery. [Cursor skills](https://cursor.com/docs/skills), [cloud skill support](https://cursor.com/help/ai-features/cloud-agents)
 
-Run pstack/hybrid/install-codex.sh and pstack/hybrid/check-codex.sh from the
-pinned checkout. Verify codex-cli 0.153.3 at the private installer prefix.
-Read the staged BUILD.json and report its source revision and fingerprint.
+Personal skills are account context. Codex CLI, its login, project dependencies, and the selected cloud environment remain separate preparation for each execution environment. This discovery result does not make every repository's cloud VM ready to run Codex.
 
-Set the runtime Start command to:
-bash "$HOME/hstack-bootstrap/pstack/hybrid/start-cursor.sh"
-Run this only when a task VM boots, never during Build Install.
+## Recorded fresh cloud result
 
-Save the repeatable preparation in this personal environment and complete a
-successful Build before any Codex login. Do not authenticate Codex or copy
-authentication files during setup. Report the environment name and Build ID.
-Do not claim native cloud plugin discovery from staged files alone.
-```
-
-Cursor's setup agent can prepare and save an environment through the cloud dashboard. Keep the pinned bootstrap outside the task checkout because Builds use default-branch configuration. A feature-branch change alone does not replace the active Build. Repository `.cursor/environment.json` takes precedence over personal and team environments. [Environment setup](https://cursor.com/docs/cloud-agent/setup), [Builds](https://cursor.com/docs/cloud-agent/builds)
-
-If you configure the repository template instead, merge its `install` and `start` commands with existing project setup. Add the pinned bootstrap, package build, and staging steps above to cover hstack itself. For another repository, use the same separate public bootstrap checkout. Do not assume that repository contains `pstack/hybrid/`.
-
-Cursor snapshots disk state after a successful Build. New agents use the active Build and run its startup commands. Shell exports and running processes do not survive the snapshot. A failed Build leaves the preceding successful Build active. [Cloud Agent Builds](https://cursor.com/docs/cloud-agent/builds)
-
-## Check the saved Build on fresh agents
-
-The personal `hstack activation` environment for `huankoh/plugins` was saved through Cursor's UI with this successful Build:
+The [fresh discovery task](https://example.invalid/private-cursor-task-01) passed with this identity:
 
 | Recorded item | Value |
-|---|---|
-| Environment ID | `private-environment-01` |
-| Build ID | `private-build-01` |
-| Source revision | `1447b237746e9ea58525a3b3209b5e8a4c5f20b1` |
-| Source fingerprint | `aa26de2dc500267b3cee8f047f5cee045f634f0268eb0b4e342ac99186e0c0f0` |
-| Bootstrap checkout | `~/hstack-bootstrap` |
-| Staged Cursor package | `~/.cursor/plugins/local/hstack` |
-| Codex CLI | `0.153.3`, installed without credentials |
+| --- | --- |
+| Environment | `hstack activation` (`private-environment-01`) |
+| Tested Build | `private-build-01` |
+| Source revision | `bbe9d3e5d3f3531227e4c5d88da99a6394540bb1` |
+| Source fingerprint | `dc2ec751f51e2bba5a24770ed321447aea68f1aa14e25a9d4a5b4038b9fac868` |
+| Distribution revision | `66b1ac1ac6ae2c190a9ff20a9f1db28f367c4977` |
+| Selected cache | `/home/ubuntu/.cursor/plugins/cache/hstack/61205765/66b1ac1ac6ae2c190a9ff20a9f1db28f367c4977/` |
 
-An earlier [fresh agent in the correctly selected environment](https://example.invalid/private-cursor-task-01) confirmed Build `private-build-02`, source `e35ef95c149bd2a45776779a11da7e0f68366a2c`, its matching fingerprint, and Codex CLI 0.153.3. The runner found the private installer prefix without an exported binary path. Authentication was initially unavailable. The receipt fixture passed all four acceptance tests through explicit hstack file loading.
+Both namespaced entrypoints were present in the initial catalog. The agent loaded the normal entrypoint, `SKILL-MAP.json`, and `hybrid/runtime/cursor.md`, confirmed the matching package identity, and left Git status clean. It did not touch authentication, run Codex, or change model settings.
 
-That fresh agent did not discover hstack natively. Its initial catalog contained only upstream pstack's `setup-pstack` from the `cursor-public` cache, not hstack's skills. The agent explicitly loaded the staged `poteto-mode` and Cursor runtime adapter. Native cloud plugin registration has not been achieved despite the separate local Cursor plugin installation.
+This test used a discovery-only startup configuration. The environment's saved Start has since been restored to the plain command below. Configuration Build `private-build-02` succeeded and is active with the same source pin. The native discovery pass belongs to the tested `80bd34e2` Build above; restoring normal Start does not establish a new authentication or Codex execution result.
 
-A subsequent device login in that VM enabled a real Codex review. Handoff `private-handoff-01`, worker `private-worker-01`, reviewed fixture commit `c4fa19a3b5dd7ea88f31d391b6fb9a9ce1656ead`. Codex returned `pass` with no findings, the parent runner passed all four tests, source preservation passed, and HEAD validation returned true. This verifies subscription-authenticated nested execution after device login, separately from secret-based startup.
+## Prepare Codex in the selected environment
 
-A [fresh unattended-authentication task](https://example.invalid/private-cursor-task-02) used the current Build in the table above. Its runtime Start restored the Environment Runtime Secret before the agent ran. Doctor reported `auth: chatgpt` and `ready: true` without manual login, restoration, or exported `CODEX_HOME` or binary overrides. The real Codex review passed with no findings; all four parent acceptance tests, source preservation, and current-HEAD validation passed. Native poteto-mode was still absent, so this run explicitly loaded the staged skill and Cursor adapter. See the [sanitized evidence](../examples/cursor-cloud-runtime-secret-verification.json).
+Use a separate bootstrap checkout at `~/hstack-bootstrap` so the application repository need not contain hstack files. Fetch `https://github.com/huankoh/plugins.git` at exact source `bbe9d3e5d3f3531227e4c5d88da99a6394540bb1` and verify HEAD. Preserve unrelated checkouts and project settings.
 
-When starting a task, select the named `hstack activation` environment in the repository/environment picker. Selecting plain `plugins` or `huankoh/plugins` can select a different saved environment. Confirm the environment name and Build on the new task before testing. The pinned bootstrap is independent of the task branch, so selecting `main` also tests that separation.
+The environment needs Git, Python 3.9+ with the pinned `pstack/hybrid/requirements.txt`, Node.js 20+, and npm. Build the package with the selected Python, then run `pstack/hybrid/install-codex.sh` and `pstack/hybrid/check-codex.sh` from that checkout. The tested CLI version is `0.153.3`. Save only credential-free Build preparation.
 
-One fresh probe selected plain `plugins` and used the older `Personal Environment huankoh/plugins`, whose UI showed no install script. That task lacked both the package and Codex CLI. This result identifies the wrong environment selection; it does not establish a failure of the saved hstack Build.
-
-After explicitly selecting `hstack activation`, start one fresh agent for the dedicated Runtime Secret trial and run:
+Use this normal runtime Start command:
 
 ```bash
-bash "$HOME/hstack-bootstrap/pstack/hybrid/check-codex.sh"
-python3 "$HOME/hstack-bootstrap/pstack/hybrid/runner.py" doctor
+bash "$HOME/hstack-bootstrap/pstack/hybrid/start-cursor.sh"
 ```
 
-The agent must report the pinned CLI version and the actual authentication state. Record whether hstack's `poteto-mode` appears in its native skill catalog before reading staged files. Verify the staged `BUILD.json` matches the selected revision. Existing agents or explicitly selected older Builds are not covered by this check. Repeated Build-reuse probes must be credential-free or use separately provisioned sessions; do not start multiple VMs with the same static login seed.
+This checks Codex and runs the existing configured authentication bootstrap. It does not export project skills. The earlier `--skills ...` project-export experiment did not establish discovery and is not the current discovery recipe. If Python dependencies use a private virtual environment, append `--python /absolute/path/to/venv/bin/python` or retain `HSTACK_PYTHON` as an environment setting; shell exports alone do not survive snapshots.
 
-If native discovery is unavailable, explicitly read `~/.cursor/plugins/local/hstack/skills/poteto-mode/SKILL.md` and its `hybrid/runtime/cursor.md` adapter to exercise the workflow. Record that activation method. Staging the full package preserves relative links but does not prove native plugin registration.
+Select the intended environment, such as **hstack activation**, explicitly when starting a task. A local plugin installation does not create its CLI or login, and selecting plain `plugins` may choose a different saved environment. The [environment template](../examples/environment.json) installs and checks only CLI. Preserve existing project setup when integrating the bootstrap. Repository `.cursor/environment.json` takes precedence over personal and team environments. [Environment setup](https://cursor.com/docs/cloud-agent/setup)
 
-## Authenticate at runtime
+New agents use the selected environment's active successful Build. A failed Build leaves the preceding successful Build active; existing VMs are not updated by a new snapshot. [Cloud Agent Builds](https://cursor.com/docs/cloud-agent/builds)
 
-The Build contains the executable, not a subscription login. Runtime Secret startup is described below. For a separate manual-login setup, sign in inside the VM where Codex will actually run:
+## Authenticate on the execution VM
+
+The Build contains Codex CLI, not a subscription login. Skill discovery and Codex readiness are separate. Use normal Start for a separately authorized authentication and execution test. For a separate manual-login setup, run:
 
 ```bash
 "$HOME/.local/share/hstack-codex/node_modules/.bin/codex" login --device-auth
 python3 "$HOME/hstack-bootstrap/pstack/hybrid/runner.py" doctor
 ```
 
-The runner discovers the installer's private prefix without an exported `HSTACK_CODEX_BINARY` when no Codex executable is already on `PATH`. An explicit binary override and a usable `PATH` executable retain precedence. The saved Build verified private-prefix resolution.
+Use the configured Python environment if applicable. The runner finds the installer's private prefix when no usable Codex executable is on `PATH`; explicit binary settings and a usable `PATH` executable retain precedence. Complete the device login in the VM where Codex will run. Keep login state out of Builds, and do not snapshot an authenticated test VM. The Pro subscription path does not provide the documented Business/Enterprise workspace personal access tokens. [Authentication](https://learn.chatgpt.com/docs/auth), [workspace access tokens](https://learn.chatgpt.com/docs/enterprise/access-tokens)
 
-Complete the device login yourself in the running task VM. A fresh VM may need another login. Keep the saved Build free of login state, and do not create a new snapshot from an authenticated test VM. Do not repeatedly seed fresh VMs with one old `auth.json` copy. The Pro subscription path does not provide the documented Business/Enterprise workspace personal access tokens. See [authentication](https://learn.chatgpt.com/docs/auth) and [workspace access tokens](https://learn.chatgpt.com/docs/enterprise/access-tokens).
+### Existing Runtime Secret bootstrap
 
-### Restore a dedicated login from a Runtime Secret
+Normal `start-cursor.sh` retains the existing bounded authentication bootstrap. Marketplace discovery and personal skill sync do not provide a Codex login. A dedicated ChatGPT session can be supplied as `HSTACK_CODEX_AUTH_JSON`, with type **Runtime Secret** and permission **Environment**, in the intended Cursor environment. Provision that session separately from desktop login, using file-backed credential storage outside Git. Do not place its value in a prompt, ordinary environment variable, Install script, repository, or Build. [Cursor secret scoping](https://cursor.com/docs/cloud-agent/setup#environment-scoped-secrets)
 
-`start-cursor.sh` supports a bounded bootstrap experiment with a dedicated ChatGPT login. Create that login with file-backed credential storage in a private directory outside Git. Use a separate session from the desktop. Save its complete managed `auth.json` as `HSTACK_CODEX_AUTH_JSON`, with type **Runtime Secret** and permission **Environment**, in the intended Cursor environment. Do not put the value in a prompt, ordinary environment variable, Install script, repository, or Build. Environment scope limits it to tasks using that environment. [Cursor secret scoping](https://cursor.com/docs/cloud-agent/setup#environment-scoped-secrets)
+Startup restores the login into `~/.local/share/hstack-codex-auth` only when `auth.json` is absent. It preserves existing refreshed credentials, uses private directory permissions and a `0600` file, and rejects symlinks, repository paths, and API-key authentication. The worker selects that dedicated home and removes the seed from child environments, including verification commands. Retain any existing `HSTACK_CODEX_AUTH_HOME` override so later jobs continue using the same cache.
 
-After the new scripts are installed in a credential-free Build, set its runtime Start command to:
+A static Runtime Secret does not provide durable unattended authentication across fresh or concurrent VMs. ChatGPT refreshes and changes its saved tokens; the updated file must return to secure storage before another VM uses that session. Cursor's current public API does not provide saved-secret write-back. Use one VM for this experiment and preserve its refreshed cache. A durable design needs an external private store with exclusive session use and write-back, or a persistent Codex worker. Do not reuse one old seed for repeated discovery probes. The recorded discovery-only tests skipped authentication startup. [Managed-auth maintenance](https://learn.chatgpt.com/docs/auth/ci-cd-auth)
 
-```bash
-bash "$HOME/hstack-bootstrap/pstack/hybrid/start-cursor.sh"
-```
+Doctor reports cached readiness. Require an actual read-only Codex handoff before declaring authentication successful; restoring a file or reporting login status alone does not prove server acceptance. If nested execution is unauthenticated, report `auth_required`. The runner neither switches to an API key nor routes the job to another host automatically.
 
-Startup restores credentials into `~/.local/share/hstack-codex-auth` only when `auth.json` is absent. Existing refreshed credentials are preserved. The directory is private, the file is mode `0600`, and the script rejects symlinks, repository paths, and API-key authentication. The hstack worker selects that dedicated home whenever the seed is present, and removes the seed from its child process environments, including verification commands. Set `HSTACK_CODEX_AUTH_HOME` to an absolute private directory if a different location is required; retain that setting if the seed is later removed so hstack keeps selecting the same cache.
+## Run and collect the result
 
-This is startup bootstrap, not a shared credential-renewal service. A Pro login refreshes and changes its saved tokens. The refreshed file must survive and return to secure storage before a different VM uses that session. Cursor's current public API does not provide saved-secret write-back. Use one VM for this experiment and preserve its updated cache; do not launch concurrent VMs with the same seed or assume an old secret remains valid. A durable fresh-VM design needs an external private store with exclusive session use and write-back, or a persistent Codex worker. [OpenAI managed-auth maintenance](https://learn.chatgpt.com/docs/auth/ci-cd-auth)
+Invoke `/hstack-poteto-mode` after discovery. For implementation, the runtime defaults to Cursor building and actual Codex CLI review. Questions and planning do not automatically start review. Follow the review/rescue procedure in the [local guide](cursor-local.md), using the pinned runner, and use the [activation fixture](../tests/activation/README.md) for a disposable execution test.
 
-`runner.py doctor` reports cached login readiness. Verify a real read-only handoff before declaring authentication works. Never treat a successful restore or `login status` alone as proof that the server accepts the credential.
+Cursor checkpoints changes before review and stops its own writes before rescue. The runner works in a separate checkout; the outer agent inspects and applies any accepted rescue patch and reviews the final commit. Collect the report, patch, and relevant verification logs through supported artifacts or an authorized branch before the VM ends. Do not export credentials or the whole private runner directory.
 
-A persistent Grok VM can handle routine Codex jobs instead, using Git commit handoffs. The runner does not route between hosts automatically. If nested execution is requested but unauthenticated, report `auth_required` to the coordinator and complete sign-in; do not silently charge an API key.
+## Earlier evidence and limits
 
-## Invoke and collect
-
-Follow the review/rescue commands in the [local guide](cursor-local.md) inside the VM, using the runner from the pinned bootstrap checkout. Use the [activation fixture](../tests/activation/README.md) for a disposable handoff test after authentication. Cursor must checkpoint changes before review and stop its own writes before rescue. The runner uses a separate checkout and returns a patch, so the outer Cursor agent must inspect and apply accepted changes deliberately.
-
-Before the VM ends, collect the report, patch and verification logs through the cloud agent's supported artifact output or an authorized branch. Files existing only on that VM are not a durable delivery. Do not export credentials or the entire private runner directory.
+- At source `8b2ed0c`, Start exited successfully and exported all 45 wrappers into `/workspace/.cursor/skills`, with a clean Git status, but the [fresh task](https://example.invalid/private-cursor-task-02) did not expose the hstack poteto entrypoint. Removing the entrypoint's inherited mode and explicit-only flags in `bbe9d3e` still did not establish cloud discovery before personal sync was enabled. Project export success alone is not a discovery result.
+- On 2026-09-06, source `e35ef95` completed a [device-login review test](https://example.invalid/private-cursor-task-03) using explicit staged-file loading. Source `1447b23` then completed a [fresh Runtime Secret trial](https://example.invalid/private-cursor-task-04) without manual login. Both real reviews passed all four parent acceptance tests, source preservation, and current-commit validation. These are earlier execution results; neither proved namespaced discovery. [Runtime Secret evidence](../examples/cursor-cloud-runtime-secret-verification.json)
+- The former `huankoh/plugins/tree/hstack-cursor` UI import selected 65 default-branch upstream plugins instead of hstack and was removed. The current installation uses the public `huankoh/hstack` marketplace with an explicit Git ref.
 
 ## Troubleshooting
 
-- Missing/wrong CLI: check the Build succeeded, is active, and contains the expected scripts. Run the startup checker.
-- Missing hstack: confirm the task selected `hstack activation`, then inspect the staged package and Build. A local Cursor marketplace installation does not establish cloud installation. Distinguish missing files from unavailable native discovery.
-- Authentication failure: inspect sanitized startup output and doctor status first. During an unattended-authentication test, stop and report the failure before attempting manual login. For a separate manual-login setup, run device login in the current VM.
-- Download/API failure: inspect the effective outbound network policy. npm package downloads and Codex authentication/API endpoints must be reachable. Preserve existing policy rather than disabling controls. [Cursor secrets and networking](https://cursor.com/docs/cloud-agent/security-network).
-- Worker interrupted: inspect its recorded key and collect artifacts before retrying. A success message without a collected patch/report is incomplete.
-
-Runtime Secret startup and a real nested Codex review passed in the recorded environment. Verify other environments independently; the binary or cached login status alone does not establish server authentication.
-
-## Remote marketplace import probe
-
-The exact tested marketplace was published as [the hstack-cursor distribution branch](https://github.com/huankoh/plugins/tree/hstack-cursor) at commit `0033863ff097f08068f06c73338721715bfeec3e`. It contains the same generated e35ef95 package as the working local installation; adaptation source and review remain on the PR branch.
-
-Importing that `/tree/hstack-cursor` URL through Cursor's **Import from GitHub** UI imported the default-branch marketplace with 65 upstream plugins instead of hstack. The experimental registration was removed without installing any of those plugins. Do not use that branch URL as a verified installation recipe. Native cloud registration remains unresolved; the saved environment's explicit staged-file workflow is the tested cloud mechanism.
+- Missing hstack: confirm the pinned marketplace and plugin are installed, personal export completed, sync reports **Skills synced**, and the task is fresh. Inspect the initial catalog and selected cache path. Do not substitute original pstack or claim discovery from copied files alone.
+- Missing CLI: verify the selected environment's successful Build and run `check-codex.sh`. Personal sync does not install executables.
+- Authentication failure: inspect sanitized startup output and doctor. Record an unattended-test failure before attempting a separate manual login. Never reuse a stale seed to hide the failure.
+- Network failure: inspect effective outbound policy for npm downloads and Codex authentication/API endpoints. Preserve existing controls. [Cursor networking](https://cursor.com/docs/cloud-agent/security-network)
+- Interrupted worker: inspect its recorded job key and collect artifacts before retrying. A success message without its report and validation is incomplete.

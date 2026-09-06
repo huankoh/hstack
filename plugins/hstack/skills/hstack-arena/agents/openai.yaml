@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-arena
+  short_description: 'Within an explicitly selected hstack workflow. Spawn N parallel '
+policy:
+  allow_implicit_invocation: false

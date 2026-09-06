@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-swarm
+  short_description: Within an explicitly selected hstack workflow. Fan out N paralle
+policy:
+  allow_implicit_invocation: false

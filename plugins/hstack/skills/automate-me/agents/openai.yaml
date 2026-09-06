@@ -1,6 +1,0 @@
-interface:
-  display_name: automate-me
-  short_description: Use for "automate me", "create/update/refresh my -mode skill",
-    "
-policy:
-  allow_implicit_invocation: false

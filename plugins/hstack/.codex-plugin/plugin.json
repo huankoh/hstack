@@ -1,6 +1,6 @@
 {
   "name": "hstack",
-  "version": "0.14.8+hstack.f1d286441e5a",
+  "version": "0.14.8+hstack.7947aa059b0c",
   "description": "hstack: pstack workflows for Codex CLI and desktop, with optional hybrid execution.",
   "author": {
     "name": "Lauren Tan"
@@ -16,7 +16,7 @@
     "category": "Productivity",
     "capabilities": [],
     "defaultPrompt": [
-      "Use $poteto-mode for this engineering task."
+      "Use $hstack-poteto-mode for this engineering task."
     ]
   },
   "homepage": "https://github.com/huankoh/hstack"

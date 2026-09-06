@@ -1,6 +1,6 @@
 # Steer with principle names
 
-pstack ships 21 principles as individual skills. `/poteto-mode` reads their index at the start of every multi-step task, applies the ones the task triggers, and names each applied principle in its reply along with the decision it changed.
+pstack ships 21 principles as individual skills. `/hstack-poteto-mode` reads their index at the start of every multi-step task, applies the ones the task triggers, and names each applied principle in its reply along with the decision it changed.
 
 You don't invoke principles. You use their names to steer. Each name points at a complete rule the agent has already read, so one phrase redirects the work more precisely than a paragraph of instructions.
 
@@ -30,40 +30,40 @@ Each phrase lands because the rule behind it is specific. The agent still has to
 
 The core principles decide how much to build and when to rethink the design:
 
-- [Laziness Protocol](../../skills/principle-laziness-protocol/SKILL.md) prefers deletion and the smallest change that solves the problem.
-- [Foundational Thinking](../../skills/principle-foundational-thinking/SKILL.md) chooses the core data structures before writing logic.
-- [Redesign from First Principles](../../skills/principle-redesign-from-first-principles/SKILL.md) integrates a new requirement as if it had been there from day one.
-- [Subtract Before You Add](../../skills/principle-subtract-before-you-add/SKILL.md) removes dead weight before building on top of it.
-- [Minimize Reader Load](../../skills/principle-minimize-reader-load/SKILL.md) collapses layers and hidden state a reader must hold in their head.
-- [Outcome-Oriented Execution](../../skills/principle-outcome-oriented-execution/SKILL.md) converges rewrites on the target design instead of preserving throwaway compatibility states.
-- [Experience First](../../skills/principle-experience-first/SKILL.md) chooses the user's result over implementation convenience.
-- [Exhaust the Design Space](../../skills/principle-exhaust-the-design-space/SKILL.md) builds two or three competing prototypes when there's no precedent.
-- [Build the Lever](../../skills/principle-build-the-lever/SKILL.md) builds the script that does or proves the work, so a reviewer can rerun it.
+- [Laziness Protocol](../../skills/hstack-principle-laziness-protocol/SKILL.md) prefers deletion and the smallest change that solves the problem.
+- [Foundational Thinking](../../skills/hstack-principle-foundational-thinking/SKILL.md) chooses the core data structures before writing logic.
+- [Redesign from First Principles](../../skills/hstack-principle-redesign-from-first-principles/SKILL.md) integrates a new requirement as if it had been there from day one.
+- [Subtract Before You Add](../../skills/hstack-principle-subtract-before-you-add/SKILL.md) removes dead weight before building on top of it.
+- [Minimize Reader Load](../../skills/hstack-principle-minimize-reader-load/SKILL.md) collapses layers and hidden state a reader must hold in their head.
+- [Outcome-Oriented Execution](../../skills/hstack-principle-outcome-oriented-execution/SKILL.md) converges rewrites on the target design instead of preserving throwaway compatibility states.
+- [Experience First](../../skills/hstack-principle-experience-first/SKILL.md) chooses the user's result over implementation convenience.
+- [Exhaust the Design Space](../../skills/hstack-principle-exhaust-the-design-space/SKILL.md) builds two or three competing prototypes when there's no precedent.
+- [Build the Lever](../../skills/hstack-principle-build-the-lever/SKILL.md) builds the script that does or proves the work, so a reviewer can rerun it.
 
 The architecture principles decide where state, validation, and compatibility live:
 
-- [Model the Domain](../../skills/principle-model-the-domain/SKILL.md) encodes repeated rules in one structure, not scattered conditionals.
-- [Boundary Discipline](../../skills/principle-boundary-discipline/SKILL.md) validates at the boundary and trusts internal types.
-- [Type System Discipline](../../skills/principle-type-system-discipline/SKILL.md) makes illegal states unrepresentable.
-- [Make Operations Idempotent](../../skills/principle-make-operations-idempotent/SKILL.md) converges retries on the same end state.
-- [Migrate Callers Then Delete Legacy APIs](../../skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md) migrates and deletes in one wave.
-- [Separate Before Serializing Shared State](../../skills/principle-separate-before-serializing-shared-state/SKILL.md) removes the sharing before adding coordination.
+- [Model the Domain](../../skills/hstack-principle-model-the-domain/SKILL.md) encodes repeated rules in one structure, not scattered conditionals.
+- [Boundary Discipline](../../skills/hstack-principle-boundary-discipline/SKILL.md) validates at the boundary and trusts internal types.
+- [Type System Discipline](../../skills/hstack-principle-type-system-discipline/SKILL.md) makes illegal states unrepresentable.
+- [Make Operations Idempotent](../../skills/hstack-principle-make-operations-idempotent/SKILL.md) converges retries on the same end state.
+- [Migrate Callers Then Delete Legacy APIs](../../skills/hstack-principle-migrate-callers-then-delete-legacy-apis/SKILL.md) migrates and deletes in one wave.
+- [Separate Before Serializing Shared State](../../skills/hstack-principle-separate-before-serializing-shared-state/SKILL.md) removes the sharing before adding coordination.
 
 The verification principles define what counts as proof:
 
-- [Prove It Works](../../skills/principle-prove-it-works/SKILL.md) verifies the real artifact, not a proxy.
-- [Fix Root Causes](../../skills/principle-fix-root-causes/SKILL.md) reproduces and traces to the cause before changing code.
-- [Sequence Work into Verifiable Units](../../skills/principle-sequence-verifiable-units/SKILL.md) ends each small unit in a check before starting the next.
+- [Prove It Works](../../skills/hstack-principle-prove-it-works/SKILL.md) verifies the real artifact, not a proxy.
+- [Fix Root Causes](../../skills/hstack-principle-fix-root-causes/SKILL.md) reproduces and traces to the cause before changing code.
+- [Sequence Work into Verifiable Units](../../skills/hstack-principle-sequence-verifiable-units/SKILL.md) ends each small unit in a check before starting the next.
 
 The delegation principles keep parallel work sane:
 
-- [Guard the Context Window](../../skills/principle-guard-the-context-window/SKILL.md) routes bulk reading to subagents and keeps findings in the main chat.
-- [Never Block on the Human](../../skills/principle-never-block-on-the-human/SKILL.md) proceeds on reversible work and presents the result.
+- [Guard the Context Window](../../skills/hstack-principle-guard-the-context-window/SKILL.md) routes bulk reading to subagents and keeps findings in the main chat.
+- [Never Block on the Human](../../skills/hstack-principle-never-block-on-the-human/SKILL.md) proceeds on reversible work and presents the result.
 
 And one meta principle:
 
-- [Encode Lessons in Structure](../../skills/principle-encode-lessons-in-structure/SKILL.md) turns advice you've repeated twice into a lint, check, or script.
+- [Encode Lessons in Structure](../../skills/hstack-principle-encode-lessons-in-structure/SKILL.md) turns advice you've repeated twice into a lint, check, or script.
 
 Don't memorize the list. Skim it now, then come back when you catch the agent doing something a name here would have prevented. That's how the vocabulary sticks.
 
-Next: [Make it yours](./09-make-it-yours.md).
+Next: [Make it yours](09-make-it-yours.md).

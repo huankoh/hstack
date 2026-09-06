@@ -1,0 +1,6 @@
+interface:
+  display_name: hstack-maintain-verification-skill
+  short_description: Within an explicitly selected hstack workflow. Periodic pass
+    tha
+policy:
+  allow_implicit_invocation: false

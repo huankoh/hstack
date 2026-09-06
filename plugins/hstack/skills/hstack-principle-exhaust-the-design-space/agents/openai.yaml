@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-principle-exhaust-the-design-space
+  short_description: Within an explicitly selected hstack workflow. Apply when facing
+policy:
+  allow_implicit_invocation: false

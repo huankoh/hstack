@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-show-me-your-work
+  short_description: Within an explicitly selected hstack workflow. Keep a reviewable
+policy:
+  allow_implicit_invocation: false

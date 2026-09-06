@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-no-comments
+  short_description: Within an explicitly selected hstack workflow. Spawn hstack-comm
+policy:
+  allow_implicit_invocation: false

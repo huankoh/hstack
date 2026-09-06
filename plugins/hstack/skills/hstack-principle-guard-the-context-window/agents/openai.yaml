@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-principle-guard-the-context-window
+  short_description: Within an explicitly selected hstack workflow. Apply when contex
+policy:
+  allow_implicit_invocation: false

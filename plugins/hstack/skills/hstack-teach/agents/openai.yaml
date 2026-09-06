@@ -1,0 +1,6 @@
+interface:
+  display_name: hstack-teach
+  short_description: Within an explicitly selected hstack workflow. Explain a body
+    of
+policy:
+  allow_implicit_invocation: false

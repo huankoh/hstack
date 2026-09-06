@@ -2,11 +2,14 @@
 
 hstack adapts Lauren Tan's MIT-licensed [pstack](https://github.com/cursor/plugins/tree/main/pstack) for Cursor and Codex CLI/desktop, with a subscription-authenticated Codex review/rescue runner. It is maintained in [huankoh/plugins](https://github.com/huankoh/plugins) and is not an official Cursor or OpenAI release.
 
-The canonical upstream skills remain in `pstack/skills`; the adaptation source stays in `pstack/hybrid` to keep upstream comparisons clear. `build.py` generates separate `hstack` packages with runtime-specific entry instructions and metadata. It does not install anything. The 18 model roles stay separate from execution backend selection. Existing model settings are preserved.
+Installable packages are published in [huankoh/hstack](https://github.com/huankoh/hstack). That repository puts the Cursor and Codex marketplace manifests on its default branch and records the source revision used for each publication. This fork remains the canonical source; [PR #1](https://github.com/huankoh/plugins/pull/1) shows the adaptation against upstream pstack.
+
+The canonical upstream skills remain in `pstack/skills`; the adaptation source stays in `pstack/hybrid` to keep upstream comparisons clear. `build.py` generates separate `hstack` packages with runtime-specific entry instructions and metadata. All generated skills and agents use distinct `hstack-` names. Invoke `/hstack-poteto-mode` in Cursor or `$hstack-poteto-mode` in Codex; bare `poteto-mode` remains pstack. Building does not install anything. The 18 model roles stay separate from execution backend selection. Existing model settings are preserved.
 
 ## Start here
 
 - [Setup overview](docs/setup.md): choose where each process runs.
+- [Invocation and discovery](docs/invocation.md): distinguish hstack from pstack and export portable Cursor skills.
 - [Cursor and local Codex](docs/cursor-local.md): package build, installation and a review.
 - [Codex CLI and desktop](docs/codex.md): use hstack directly in Codex.
 - [Codex cloud](docs/codex-cloud.md): stage a pinned package and test native cloud workflows.
@@ -30,7 +33,7 @@ A `succeeded` process can still have `verification: failed` or `blocked`. A revi
 
 ## Build and test
 
-Python 3.9+ is required on macOS/Linux. Only package building needs PyYAML; the runner uses the standard library.
+Python 3.9+ is required on macOS/Linux. Package building and portable skill export need PyYAML; the runner uses the standard library.
 
 ```bash
 python3 -m venv .venv

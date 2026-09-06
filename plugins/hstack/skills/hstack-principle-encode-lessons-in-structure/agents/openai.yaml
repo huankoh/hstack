@@ -1,0 +1,6 @@
+interface:
+  display_name: hstack-principle-encode-lessons-in-structure
+  short_description: Within an explicitly selected hstack workflow. Apply when you
+    ca
+policy:
+  allow_implicit_invocation: false

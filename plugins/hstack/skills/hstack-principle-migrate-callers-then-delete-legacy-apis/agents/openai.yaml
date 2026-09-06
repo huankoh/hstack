@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-principle-migrate-callers-then-delete-legacy-apis
+  short_description: Within an explicitly selected hstack workflow. Apply when introd
+policy:
+  allow_implicit_invocation: false

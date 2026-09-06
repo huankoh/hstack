@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-principle-prove-it-works
+  short_description: Within an explicitly selected hstack workflow. Apply after compl
+policy:
+  allow_implicit_invocation: false

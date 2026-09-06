@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-create-verification-skill
+  short_description: Within an explicitly selected hstack workflow. Generate a projec
+policy:
+  allow_implicit_invocation: false

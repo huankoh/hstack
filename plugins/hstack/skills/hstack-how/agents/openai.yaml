@@ -1,0 +1,5 @@
+interface:
+  display_name: hstack-how
+  short_description: Within an explicitly selected hstack workflow. Use for "how does
+policy:
+  allow_implicit_invocation: false
