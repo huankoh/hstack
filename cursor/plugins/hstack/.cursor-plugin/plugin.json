@@ -1,0 +1,31 @@
+{
+  "name": "hstack",
+  "displayName": "hstack",
+  "version": "0.14.8+hstack.f1d286441e5a",
+  "description": "if you want to go fast, go deep first. pstack helps you write less, but higher quality code. rigorous agent workflows you can parallelize with confidence.",
+  "author": {
+    "name": "Lauren Tan"
+  },
+  "homepage": "https://github.com/huankoh/hstack",
+  "repository": "https://github.com/huankoh/hstack",
+  "license": "MIT",
+  "logo": "assets/logo.png",
+  "keywords": [
+    "pstack",
+    "poteto-mode",
+    "workflow",
+    "principles",
+    "agent-style",
+    "subagents",
+    "unslop"
+  ],
+  "category": "developer-tools",
+  "tags": [
+    "workflow",
+    "principles",
+    "review",
+    "planning"
+  ],
+  "skills": "./skills/",
+  "agents": "./agents/"
+}

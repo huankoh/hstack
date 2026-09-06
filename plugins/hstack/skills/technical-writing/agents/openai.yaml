@@ -1,0 +1,6 @@
+interface:
+  display_name: technical-writing
+  short_description: "Layered technical-writing standard: Di\xE1taxis structure, Google\
+    \ d"
+policy:
+  allow_implicit_invocation: false
